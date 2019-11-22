@@ -1,19 +1,20 @@
 #include "roda.h"
+#include "corpo.h"
 #define DESLOC 5
 
 GLfloat angle, fAspect;
 
 void DesenhaEixos(){
     glBegin(GL_LINES);
-    glColor3f(1.0f,0.0f,0.0f);
-    glVertex3f(0.0f,0.0f,0.0f);
-    glVertex3f(10.0f,0.0f,0.0f);
-    glColor3f(0.0f,1.0f,0.0f);
-    glVertex3f(0.0f,0.0f,0.0f);
-    glVertex3f(0.0f,10.0f,0.0f);
-    glColor3f(0.0f,0.0f,1.0f);
-    glVertex3f(0.0f,0.0f,0.0f);
-    glVertex3f(0.0f,0.0f,10.0f);
+        glColor3f(1.0f,0.0f,0.0f);
+        glVertex3f(0.0f,0.0f,0.0f);
+        glVertex3f(10.0f,0.0f,0.0f);
+        glColor3f(0.0f,1.0f,0.0f);
+        glVertex3f(0.0f,0.0f,0.0f);
+        glVertex3f(0.0f,10.0f,0.0f);
+        glColor3f(0.0f,0.0f,1.0f);
+        glVertex3f(0.0f,0.0f,0.0f);
+        glVertex3f(0.0f,0.0f,10.0f);
     glEnd();
 }
 
@@ -31,9 +32,16 @@ void Desenha(){
 
     DesenhaEixos();
 
-    desenha_roda();
+    glPushMatrix();
+        glTranslatef(0, -50, 0);
+        desenha_roda();
+    glPopMatrix();
 
+    glRotated(90, 0, 1, 0);
+    glTranslatef(0, 0, -55);
+    desenha_corpo();
 
+    glRotated(90, 0, 1, 0);
     glutSwapBuffers();
 }
 
