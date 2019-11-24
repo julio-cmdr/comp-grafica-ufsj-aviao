@@ -4,6 +4,10 @@
 
 GLfloat angle, fAspect;
 
+int rx = 0; 
+int ry = 0; 
+int rz = 0;
+
 void DesenhaEixos(){
     glBegin(GL_LINES);
         glColor3f(1.0f,0.0f,0.0f);
@@ -32,16 +36,18 @@ void Desenha(){
 
     DesenhaEixos();
 
+    glRotated(rx, 1, 0, 0);
+    glRotated(ry, 0, 1, 0);
+    glRotated(rz, 0, 0, 1);
+
     glPushMatrix();
         glTranslatef(0, -50, 0);
         desenha_roda();
     glPopMatrix();
-
+    
     glRotated(90, 0, 1, 0);
-    glTranslatef(0, 0, -55);
     desenha_corpo();
 
-    glRotated(90, 0, 1, 0);
     glutSwapBuffers();
 }
 
@@ -130,6 +136,30 @@ void GerenciaMouse(int button, int state, int x, int y){
 
 void GerenciaTeclado(unsigned char key, int x, int y) {
     switch(key){
+        case 7:
+            rx += 5;
+            break;
+
+        case 8:
+            ry += 5;
+            break;
+
+        case 9:
+            rz += 5;
+            break;
+        
+        case 4:
+            rx -= 5;
+            break;
+
+        case 5:
+            ry -= 5;
+            break;
+        
+        case 6:
+            rz -= 5;
+            break;
+
         case 27:
             exit(0);
         default:
