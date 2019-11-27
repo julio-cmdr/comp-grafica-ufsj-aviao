@@ -4,6 +4,8 @@
 void desenha_corpo(){
 
     glPushMatrix();
+        glRotatef(180, 0, 1, 0);
+        
         glColor3f(1, 0, 0);    
         glScalef(0.5f, 1.0f, 1.0f);
         glTranslatef(0, 0, -47.5);

@@ -1,8 +1,12 @@
 #include "roda.h"
 #include "corpo.h"
+#include "helice.h"
+
 #define DESLOC 5
 
 GLfloat angle, fAspect;
+
+float velHelice = 0;
 
 int rx = 0; 
 int ry = 0; 
@@ -47,6 +51,9 @@ void Desenha(){
     
     glRotated(90, 0, 1, 0);
     desenha_corpo();
+
+    glTranslatef(0, 0, 47.5);
+    desenha_helice(velHelice);
 
     glutSwapBuffers();
 }
@@ -136,28 +143,36 @@ void GerenciaMouse(int button, int state, int x, int y){
 
 void GerenciaTeclado(unsigned char key, int x, int y) {
     switch(key){
-        case 7:
+        case 'q':
             rx += 5;
             break;
 
-        case 8:
-            ry += 5;
-            break;
-
-        case 9:
-            rz += 5;
-            break;
-        
-        case 4:
+        case 'a':
             rx -= 5;
             break;
 
-        case 5:
-            ry -= 5;
+        case 'w':
+            ry += 5;
             break;
         
-        case 6:
+        case 's':
+            ry -= 5;
+            break;
+
+        case 'e':
+            rz += 5;
+            break;
+        
+        case 'd':
             rz -= 5;
+            break;
+
+        case 'r':
+            velHelice += 5;
+            break;
+
+        case 'f':
+            velHelice -= 5;
             break;
 
         case 27:
