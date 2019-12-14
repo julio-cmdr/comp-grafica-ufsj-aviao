@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 
-void desenha_corpo();
+void desenha_corpo(float cauday);
 
 
 #endif // RODA_H
