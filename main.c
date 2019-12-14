@@ -10,9 +10,9 @@ float cauday=0,asax=0;
 
 float velHelice = 0;
 
-int rx = 0; 
-int ry = 0; 
-int rz = 0;
+float rx = 0; 
+float ry = 0; 
+float rz = 0;
 
 void DesenhaEixos(){
     glBegin(GL_LINES);
@@ -36,7 +36,7 @@ void Desenha(){
     // Inicializa sistema de coordenadas do modelo
     glLoadIdentity();
     // Especifica posição do observador e do alvo
-    gluLookAt(0,80,200, 0,0,0, 0,1,0);
+    gluLookAt(-300,80,200, 0,0,0, 0,1,0);
     // Limpa a janela e o depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -56,17 +56,10 @@ void Desenha(){
 
     glTranslatef(50.0,0.0,0.0);
     glTranslatef(0.0,10.0,0.0);
-    desenha_asa(asax);
-    glTranslatef(0.0,-10.0,0.0);  
-    glTranslatef(-50.0,0.0,0.0);  
-/*
-    glTranslatef(-50.0,0.0,0.0);
-    glTranslatef(0.0,10.0,0.0);
-    //glScalef(-1.0,1.0,1.0);
-    desenha_asa(asax);
-    //glScalef(-1.0,1.0,1.0);
-    glTranslatef(0.0,-10.0,0.0);  
-    glTranslatef(50.0,0.0,0.0);*/
+    desenha_asa(asax);  
+    glTranslatef(-50.0,0.0,0.0); 
+    glTranslatef(0.0,-10.0,0.0);
+
 
     glTranslatef(0, 0, 47.5);
     desenha_helice(velHelice);
@@ -78,7 +71,7 @@ void Desenha(){
 void Inicializa (){
 
     GLfloat luzAmbiente[4]={0.2,0.2,0.2,1.0};
-    GLfloat luzDifusa[4]={0.2,0.2,0.2,1.0};		 // "cor"
+    GLfloat luzDifusa[4]={0.7,0.7,0.7,1.0};		 // "cor"
     GLfloat luzEspecular[4]={0.1, 0.1, 0.1, 0.1};// "brilho"
     GLfloat posicaoLuz[4]={10000.0, 100000.0, 10000.0, 10000.0};
 
@@ -87,7 +80,7 @@ void Inicializa (){
     GLint especMaterial = 0.5;
 
     // Especifica que a cor de fundo da janela será preta
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.529f, 0.8078f, 0.921f, 1.0f);
 
     // Habilita o modelo de colorização de Gouraud
     glShadeModel(GL_SMOOTH);
@@ -160,27 +153,27 @@ void GerenciaMouse(int button, int state, int x, int y){
 void GerenciaTeclado(unsigned char key, int x, int y) {
     switch(key){
         case 'q':
-            rx += 5;
+            rx ++;
             break;
 
         case 'a':
-            rx -= 5;
+            rx --;
             break;
 
         case 'w':
-            ry += 5;
+            ry ++;
             break;
         
         case 's':
-            ry -= 5;
+            ry --;
             break;
 
         case 'e':
-            rz += 5;
+            rz ++;
             break;
         
         case 'd':
-            rz -= 5;
+            rz --;
             break;
 
         case 'r':
