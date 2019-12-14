@@ -1,10 +1,12 @@
 #include "roda.h"
 #include "corpo.h"
 #include "helice.h"
+#include "asa.h"
 
 #define DESLOC 5
 
 GLfloat angle, fAspect;
+float cauday=0,asax=0;
 
 float velHelice = 0;
 
@@ -50,7 +52,21 @@ void Desenha(){
     glPopMatrix();
     
     glRotated(90, 0, 1, 0);
-    desenha_corpo();
+    desenha_corpo(cauday);
+
+    glTranslatef(50.0,0.0,0.0);
+    glTranslatef(0.0,10.0,0.0);
+    desenha_asa(asax);
+    glTranslatef(0.0,-10.0,0.0);  
+    glTranslatef(-50.0,0.0,0.0);  
+/*
+    glTranslatef(-50.0,0.0,0.0);
+    glTranslatef(0.0,10.0,0.0);
+    //glScalef(-1.0,1.0,1.0);
+    desenha_asa(asax);
+    //glScalef(-1.0,1.0,1.0);
+    glTranslatef(0.0,-10.0,0.0);  
+    glTranslatef(50.0,0.0,0.0);*/
 
     glTranslatef(0, 0, 47.5);
     desenha_helice(velHelice);
@@ -174,6 +190,21 @@ void GerenciaTeclado(unsigned char key, int x, int y) {
         case 'f':
             velHelice -= 5;
             break;
+        
+        case 'o': 
+			cauday++;
+			break;
+
+		case 'p': 
+			cauday--;
+			break;
+        case 'k': 
+			asax++;
+			break;
+
+		case 'l': 
+			asax--;
+			break;
 
         case 27:
             exit(0);
