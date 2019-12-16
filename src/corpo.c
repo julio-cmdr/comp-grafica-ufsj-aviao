@@ -30,12 +30,19 @@ void desenha_corpo(float cauday){
 		gluCylinder(gluNewQuadric(), 5, 1, 1, 32, 32);
 
 		//glColor3f(0.0f, 0.0f, 1.0f);
+		glTranslatef(0,-7,0);
+		//glColor3f(0,0,1);
+		glScalef(75,3,10);
+		glutSolidCube(1.0f);
+		glScalef(0.0133,0.334,0.1);
+		glColor3f(1,1,1);
+		glTranslatef(0,7,0);
+
 		glRotatef(25, 1.0, 0.0, 0.0);
 		glTranslatef(0.0,4.0,0.0);
 		glScalef(0.5f, 5.0f, 2.0f);
 		glutSolidCube(4.0f);
 		glScalef(5.0f, 0.25, 0.5f);
-		
 
 
 		glRotatef(-20, 1.0, 0.0, 0.0);
@@ -63,7 +70,7 @@ void desenha_corpo(float cauday){
 		glTranslatef(0.0, 6, 0.0);
 
 		
-
+		glColor3f(1,1,1);
 		glTranslatef(0.0,0.0,-2.0);
 		glRotatef(cauday, 0.0,1.0,0.0);
 		glScalef(0.1,0.1,0.1);

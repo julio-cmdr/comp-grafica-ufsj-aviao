@@ -2,11 +2,15 @@
 #include "corpo.h"
 #include "helice.h"
 #include "asa.h"
+#include "aileron_flap.h"
+#include <GL/glut.h>
+#include <stdio.h>
+#include <string.h>
 
 #define DESLOC 5
 
 GLfloat angle, fAspect;
-float cauday=0,asax=0;
+float leme=0,flapdx=0,flapex=0,ailerondx=0,aileronex=0;
 
 float velHelice = 0;
 
@@ -28,6 +32,56 @@ void DesenhaEixos(){
     glEnd();
 }
 
+
+void escreveTexto() {
+	glPushMatrix();
+	glTranslatef(-170.0f, 110.0f, 0.0f);
+	char *string = strdup("Eixos:   X->(Q,E) Y->(A,D) Z->(S,W)\0");
+	int w = glutBitmapLength(GLUT_BITMAP_8_BY_13, string);
+	glRasterPos2f(0.0, 0.0);
+	glColor3f(1.0, 0., 0.0);
+	int len = strlen(string);
+	for (int i = 0; i < len; i++) {
+    	glutBitmapCharacter(GLUT_BITMAP_8_BY_13, string[i]);
+	}
+	glTranslatef(-2.0f, -10.0f, 0.0f);
+	string = strdup("Leme:   I, O\0");
+	w = glutBitmapLength(GLUT_BITMAP_8_BY_13, string);
+	glRasterPos2f(0.0, 0.0);
+	len = strlen(string);
+	for (int i = 0; i < len; i++) {
+    	glutBitmapCharacter(GLUT_BITMAP_8_BY_13, string[i]);
+	}
+    
+	glTranslatef(-2.0f, -10.0f, 0.0f);
+	string = strdup("Flap:  Esq->(H,B) Dir->(J,N)\0");
+	w = glutBitmapLength(GLUT_BITMAP_8_BY_13, string);
+	glRasterPos2f(0.0, 0.0);
+	len = strlen(string);
+	for (int i = 0; i < len; i++) {
+    	glutBitmapCharacter(GLUT_BITMAP_8_BY_13, string[i]);
+	}
+
+	glTranslatef(-2.0f, -10.0f, 0.0f);
+	string = strdup("Aileron:   Esq->(G,V) Dir->(K,M)\0");
+	w = glutBitmapLength(GLUT_BITMAP_8_BY_13, string);
+	glRasterPos2f(0.0, 0.0);
+	len = strlen(string);
+	for (int i = 0; i < len; i++) {
+    	glutBitmapCharacter(GLUT_BITMAP_8_BY_13, string[i]);
+	}
+	glTranslatef(-2.0f, -10.0f, 0.0f);
+	string = strdup("Helice: R,F\0");
+	w = glutBitmapLength(GLUT_BITMAP_8_BY_13, string);
+	glRasterPos2f(0.0, 0.0);
+	len = strlen(string);
+	for (int i = 0; i < len; i++) {
+    	glutBitmapCharacter(GLUT_BITMAP_8_BY_13, string[i]);
+	}
+
+	glPopMatrix();
+}
+
 // Função callback chamada para fazer o desenho
 void Desenha(){
 
@@ -36,9 +90,10 @@ void Desenha(){
     // Inicializa sistema de coordenadas do modelo
     glLoadIdentity();
     // Especifica posição do observador e do alvo
-    gluLookAt(-300,80,200, 0,0,0, 0,1,0);
+    gluLookAt(300,80,200, 0,0,0, 0,1,0);
     // Limpa a janela e o depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    escreveTexto();
 
     DesenhaEixos();
 
@@ -47,22 +102,98 @@ void Desenha(){
     glRotated(rz, 0, 0, 1);
 
     glPushMatrix();
-        glTranslatef(0, -50, 0);
+        glColor3f(1,1,1);
+        //glTranslatef(0,0,3);
+        //perna1
+        glRotatef(-25,1,0,0);
+        glutSolidSphere(1, 10 ,10);
+        glTranslatef(0,-25,0);
+
+        glScalef(1,50,1);
+        glutSolidCube(1.0f);
+        glScalef(1,0.02,1);
+        glTranslatef(0,25,0);
+        glRotatef(25,1,0,0);
+        //glTranslatef(0,0,-6);
+        //perna2
+        glRotatef(25,1,0,0);
+        glutSolidSphere(1, 10 ,10);
+        glTranslatef(0,-25,0);
+
+        glScalef(1,50,1);
+        glutSolidCube(1.0f);
+        glScalef(1,0.02,1);
+        glTranslatef(0,25,0);
+        glRotatef(-25,1,0,0);
+        //glTranslatef(0,0,3);
+        //rodas
+        glTranslatef(0, -45, 0);
+        glTranslatef(0,0,22);
         desenha_roda();
+        glTranslatef(0, 0, -44 );
+        desenha_roda();
+        glTranslatef(0,0 ,22);
+        glTranslatef(0,45,0);
+
+        //roda traseira
+        glTranslatef(-80,0,0);
+        glColor3f(1,1,1);
+       // glTranslatef(0,-25,0);
+        glRotatef(-40,0,0,1);
+        glutSolidSphere(1, 10 ,10);
+        glTranslatef(0,-20,0);
+
+        glScalef(1,20,1);
+        glutSolidCube(1.0f);
+        glScalef(1,0.05,1);
+        
+        glTranslatef(0,-10,0);
+        glTranslatef(0,0,2);
+        desenha_roda();
+        glTranslatef(0,0,-4);
+        desenha_roda();
+
     glPopMatrix();
     
     glRotated(90, 0, 1, 0);
-    desenha_corpo(cauday);
+    desenha_corpo(leme);
 
     glTranslatef(50.0,0.0,0.0);
     glTranslatef(0.0,10.0,0.0);
-    desenha_asa(asax);  
-    glTranslatef(-50.0,0.0,0.0); 
-    glTranslatef(0.0,-10.0,0.0);
+    desenha_asa();  
+    glTranslatef(-50.0,0.0,0.0);
 
+    glTranslatef(0.0,-10.0,0.0);
 
     glTranslatef(0, 0, 47.5);
     desenha_helice(velHelice);
+    glTranslatef(0, 0, -47.5);
+    
+
+    glTranslatef(0.0,10.0,0.0);
+    glTranslatef(-63,0.0,0.0);
+    glColor3f(0.0,1.0,0.0);
+    desenha_aileron_flap(aileronex);
+    glColor3f(1.0,0.0,0.0);
+    glTranslatef(26,0,0);
+    desenha_aileron_flap(flapex);
+    glColor3f(1.0,1.0,1.0);
+    glTranslatef(63,0.0,0.0);
+
+    glTranslatef(37,0,0);
+    //glTranslatef(63,0.0,0.0);
+    glColor3f(0.0,1.0,0.0);
+    desenha_aileron_flap(ailerondx);
+    glColor3f(1.0,0.0,0.0);
+    glTranslatef(-26,0,0);
+    desenha_aileron_flap(flapdx);
+    glColor3f(1.0,1.0,1.0);
+    //glTranslatef(-63,0.0,0.0);
+    glTranslatef(0.0,-10.0,0.0);
+    
+
+     
+    
 
     glutSwapBuffers();
 }
@@ -152,27 +283,27 @@ void GerenciaMouse(int button, int state, int x, int y){
 
 void GerenciaTeclado(unsigned char key, int x, int y) {
     switch(key){
-        case 'q':
+        case 'e':
             rx ++;
             break;
 
-        case 'a':
+        case 'q':
             rx --;
             break;
 
-        case 'w':
+        case 'a':
             ry ++;
             break;
         
-        case 's':
+        case 'd':
             ry --;
             break;
 
-        case 'e':
+        case 'w':
             rz ++;
             break;
         
-        case 'd':
+        case 's':
             rz --;
             break;
 
@@ -184,20 +315,57 @@ void GerenciaTeclado(unsigned char key, int x, int y) {
             velHelice -= 5;
             break;
         
-        case 'o': 
-			cauday++;
+        case 'i': {
+            if(leme < 45)
+			    leme++;
 			break;
+        }
 
-		case 'p': 
-			cauday--;
+		case 'o': {
+            if(leme > -45)
+			    leme--;
 			break;
-        case 'k': 
-			asax++;
+        }
+        case 'h': {
+            if(flapex < 20)
+			    flapex++;
 			break;
-
-		case 'l': 
-			asax--;
+        }
+		case 'b': {
+			if(flapex > -20)
+                flapex--;
 			break;
+        }
+        case 'g': {
+			if(aileronex < 20)
+                aileronex++;
+			break;
+        }
+		case 'v': {
+			if(aileronex > -20)
+                aileronex--;
+			break;
+        }
+        case 'j': {
+            if(flapdx < 20)
+			    flapdx++;
+			break;
+        }
+		case 'n': {
+			if(flapdx > -20)
+                flapdx--;
+			break;
+        }
+        case 'k': {
+            if(ailerondx < 20)
+			    ailerondx++;
+			break;
+        }
+		case 'm': {
+            if(ailerondx > -20)
+			    ailerondx--;
+			break;
+        }
 
         case 27:
             exit(0);
